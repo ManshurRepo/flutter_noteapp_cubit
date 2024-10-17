@@ -1,10 +1,10 @@
 {
-    "settings": "settings",
+    "settings": "Settings",
     "English": "English",
     "Indonesia": "Bahasa",
     "Todo List": "Todo List",
     "No Tasks": "No Tasks",
-    "Add your task": "Add your task",
+    "Add Task": "Add Task",
     "Please add your title": "Please add your title",
     "Title": "Title",
     "Add your Title": "Add your Title",
@@ -12,9 +12,25 @@
     "Time": "Time",
     "Add your time": "Add your time",
     "Please add your date": "Please add your date",
+    "Date": "Date",
     "Please add your description": "Please add your description",
     "Description": "Description",
     "Add your description": "Add your description",
-    "Add Task": "Add Task",
-    "Task is created": "Task is created"
+    
+    "Task is created": "Task is created",
+    "delete": "Delete",
+    "title" : "title",
+    "time" : "time",
+    "date" : "date",
+    "description" : "description",
+    "add your title" : "add your title",
+    "add your time" : "add your time",
+
+    "add your date" : "add your date",
+    "add your description" : "add your description",
+    "Update Task": "Update Task", 
+    "Update Your Task" : "Update Your Task"
+
+
+    
 }

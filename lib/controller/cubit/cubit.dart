@@ -77,7 +77,7 @@ class TodoCubit extends Cubit<TodoState> {
   Future<void> gettingDataFromDatabase(database) async {
     emit(LoadingDataFromDatabaseState());
 
-    await Future.delayed(Duration(seconds: 5));
+    
 
     if (database != null) {
       tasks = [];

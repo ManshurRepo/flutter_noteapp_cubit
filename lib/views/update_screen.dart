@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -33,23 +31,27 @@ class UpdateTaskScreen extends StatefulWidget {
 
 class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   final titleController = TextEditingController();
-
   final timeController = TextEditingController();
-
   final dateController = TextEditingController();
-
   final descController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    super.initState();
     titleController.text = widget.title;
     timeController.text = widget.time;
     dateController.text = widget.date;
     descController.text = widget.desc;
+  }
 
-    super.initState();
+  @override
+  void dispose() {
+    titleController.dispose();
+    timeController.dispose();
+    dateController.dispose();
+    descController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,7 +59,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
     return BlocConsumer<TodoCubit, TodoState>(
       listener: (context, state) {
         if (state is SuccessUpdatingDataFromDatabase) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
@@ -155,7 +157,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                       hintText: 'Add your description',
                       lines: 5,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     MaterialButton(
                       minWidth: double.infinity,
                       onPressed: () {
@@ -170,13 +172,14 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                           print("Task is created");
                         }
                       },
-                      color: Colors.deepOrange,
+                      color: Theme.of(context).primaryColor,
+                      textColor: Theme.of(context).colorScheme.onPrimary,
                       child: const Text(
                         "Update Task",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

@@ -1,3 +1,156 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +161,14 @@ import 'package:intl/intl.dart';
 
 import 'home_screen.dart';
 
-class AddScreen extends StatelessWidget {
+class AddScreen extends StatefulWidget {
+  const AddScreen({super.key});
+
+  @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -16,11 +176,20 @@ class AddScreen extends StatelessWidget {
   var _formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    titleController.dispose();
+    timeController.dispose();
+    dateController.dispose();
+    descController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<TodoCubit, TodoState>(
       listener: (context, state) {
         if (state is InsertingIntoTodoDatabaseState) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
@@ -30,7 +199,7 @@ class AddScreen extends StatelessWidget {
         var cubit = TodoCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text("Add your task".tr()), // Updated
+            title: Text("Add Task".tr()), 
           ),
           body: Form(
             key: _formKey,
@@ -44,13 +213,13 @@ class AddScreen extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your title".tr(); // Updated
+                          return "Please add your title".tr(); 
                         }
                         return null;
                       },
-                      label: 'Title'.tr(), // Updated
+                      label: 'Title'.tr(), 
                       prefixIcon: Icons.title,
-                      hintText: 'Add your Title'.tr(), // Updated
+                      hintText: 'Add your Title'.tr(), 
                     ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
@@ -58,13 +227,13 @@ class AddScreen extends StatelessWidget {
                       keyboardType: TextInputType.datetime,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your time".tr(); // Updated
+                          return "Please add your time".tr(); 
                         }
                         return null;
                       },
-                      label: 'Time'.tr(), // Updated
+                      label: 'Time'.tr(), 
                       prefixIcon: Icons.watch,
-                      hintText: 'Add your time'.tr(), // Updated
+                      hintText: 'Add your time'.tr(), 
                       onTap: () {
                         showTimePicker(
                           context: context,
@@ -82,13 +251,13 @@ class AddScreen extends StatelessWidget {
                       keyboardType: TextInputType.datetime,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your date".tr(); // Updated
+                          return "Please add your date".tr(); 
                         }
                         return null;
                       },
-                      label: 'Date'.tr(), // Updated
+                      label: 'Date'.tr(), 
                       prefixIcon: Icons.calendar_month,
-                      hintText: 'Add your date'.tr(), // Updated
+                      hintText: 'Add your date'.tr(), 
                       onTap: () {
                         showDatePicker(
                           context: context,
@@ -109,13 +278,13 @@ class AddScreen extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your description".tr(); // Updated
+                          return "Please add your description".tr(); 
                         }
                         return null;
                       },
-                      label: 'Description'.tr(), // Updated
+                      label: 'Description'.tr(), 
                       prefixIcon: Icons.description,
-                      hintText: 'Add your description'.tr(), // Updated
+                      hintText: 'Add your description'.tr(), 
                       lines: 5,
                     ),
                     const SizedBox(height: 10),
@@ -129,14 +298,16 @@ class AddScreen extends StatelessWidget {
                             time: timeController.text,
                             description: descController.text,
                           );
-                          print("Task is created".tr()); // Updated
+                          print("Task is created".tr()); 
                         }
                       },
-                      color: Colors.blue,
+                      color: Theme.of(context).colorScheme.primary,
+                      textColor: Theme.of(context).colorScheme.onPrimary,
                       child: Text(
-                        "Add Task".tr(), // Updated
+                        "Add Task".tr(), 
                         style: const TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.white),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),

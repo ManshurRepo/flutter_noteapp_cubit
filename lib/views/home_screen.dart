@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.blue,
+           
             title: Text(
               'Todo List'.tr(),
             ),
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           drawer: Drawer(
-            backgroundColor: Colors.blue.shade50,
+            backgroundColor: Theme.of(context).drawerTheme.backgroundColor,
             child: DrawerScreen(),
           ),
           body: cubit.tasks.isEmpty
@@ -64,44 +64,76 @@ class HomeScreen extends StatelessWidget {
                           );
                         }));
                       },
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    cubit.tasks[index]["tittle"],
-                                    style: const TextStyle(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 5),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      cubit.tasks[index]["tittle"],
+                                      style: const TextStyle(
                                         fontSize: 25,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    cubit.tasks[index]["time"],
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                  Text(
-                                    cubit.tasks[index]["date"],
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      cubit.deleteDataFromDatabase(
-                                          id: cubit.tasks[index]["id"]);
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Text(cubit.tasks[index]["description"]),
-                            ],
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.watch_rounded),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          cubit.tasks[index]["time"],
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.calendar_month),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          cubit.tasks[index]["date"],
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        cubit.deleteDataFromDatabase(
+                                            id: cubit.tasks[index]["id"]);
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                        child: Text(
+                                      cubit.tasks[index]["description"],
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),  ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -122,104 +154,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocConsumer<TodoCubit, TodoState>(
-//       listener: (BuildContext context, state) {},
-//       builder: (BuildContext context, Object? state) {
-//         var cubit = TodoCubit.get(context);
-
-//         return Scaffold(
-//           appBar: AppBar(
-//             backgroundColor: Colors.blue,
-//             title: Text('Todo List'),
-//           ),
-//           drawer: Drawer(
-//             child: Column(
-//               children: [
-//                 ListTile(
-//                   title: Text('settings'.tr()),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.language),
-//                   title: Text('Bahasa Indonesia'),
-//                   onTap: () {
-//                     cubit.changeLanguageToBahasa(context);
-//                   },
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.language),
-//                   title: Text('English'),
-//                   onTap: () {
-//                     cubit.changeLanguageToEnglish(context);
-//                   },
-//                 ),
-//               ],
-//             ),
-//           ),
-//           body: cubit.tasks.isEmpty
-//               ? Center(
-//                   child: Text(
-//                     "Tidak ada data",
-//                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-//                   ),
-//                 )
-//               : ListView.builder(
-//                   itemCount: cubit.tasks.length,
-//                   itemBuilder: (BuildContext context, int index) {
-//                     return Card(
-//                       child: Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Row(
-//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                               children: [
-//                                 Text(
-//                                   cubit.tasks[index]["tittle"],
-//                                   style: TextStyle(
-//                                       fontSize: 25,
-//                                       fontWeight: FontWeight.w600),
-//                                 ),
-//                                 Text(
-//                                   cubit.tasks[index]["time"],
-//                                   style: TextStyle(fontSize: 15),
-//                                 ),
-//                                 IconButton(
-//                                   onPressed: () {
-//                                     cubit.deleteDataFromDatabase(
-//                                         id: cubit.tasks[index]["id"]);
-//                                   },
-//                                   icon: Icon(Icons.delete),
-//                                 ),
-//                               ],
-//                             ),
-//                             SizedBox(height: 5),
-//                             Text(cubit.tasks[index]["description"]),
-//                           ],
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//           floatingActionButton: FloatingActionButton(
-//             onPressed: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (BuildContext context) {
-//                 return AddScreen();
-//               }));
-//             },
-//             child: const Icon(Icons.add),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
