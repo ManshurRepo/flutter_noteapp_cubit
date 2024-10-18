@@ -1,7 +1,7 @@
 {
   "settings": "Pengaturan",
   "English": "Bahasa Inggris",
-  "Indonesia": "Bahasa",
+  "Bahasa": "Indonesia",
   "Todo List": "Daftar Tugas",
   "No Tasks": "Tidak ada Tugas",
   "Add Task": "Tambahkan Tugas",
@@ -20,4 +20,6 @@
   "delete": "Hapus",
       "Update Task": "Perbarui Kegiatan",
           "Update Your Task" : "Edit Kegiatan"
+        
+
 }

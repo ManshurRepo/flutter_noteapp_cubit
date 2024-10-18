@@ -1,163 +1,9 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sqlite_todo/controller/cubit/cubit.dart';
 import 'package:flutter_sqlite_todo/controller/cubit/states.dart';
 import 'package:flutter_sqlite_todo/shared/component.dart';
-import 'package:intl/intl.dart';
 
 import 'home_screen.dart';
 
@@ -173,7 +19,7 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController timeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController descController = TextEditingController();
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -187,19 +33,26 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TodoCubit, TodoState>(
+      // listener: (context, state) {
+      //   if (state is InsertingIntoTodoDatabaseState) {
+      //     Navigator.pop(context);
+      //   }
+      // },
       listener: (context, state) {
-        if (state is InsertingIntoTodoDatabaseState) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-          );
-        }
-      },
+  if (state is InsertingIntoTodoDatabaseState) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      (Route<dynamic> route) => false,
+    );
+  }
+},
+
       builder: (BuildContext context, Object? state) {
         var cubit = TodoCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text("Add Task".tr()), 
+            title: Text("Add Task".tr()),
           ),
           body: Form(
             key: _formKey,
@@ -213,13 +66,13 @@ class _AddScreenState extends State<AddScreen> {
                       keyboardType: TextInputType.text,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your title".tr(); 
+                          return "Please add your title".tr();
                         }
                         return null;
                       },
-                      label: 'Title'.tr(), 
+                      label: 'Title'.tr(),
                       prefixIcon: Icons.title,
-                      hintText: 'Add your Title'.tr(), 
+                      hintText: 'Add your Title'.tr(),
                     ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
@@ -227,13 +80,13 @@ class _AddScreenState extends State<AddScreen> {
                       keyboardType: TextInputType.datetime,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your time".tr(); 
+                          return "Please add your time".tr();
                         }
                         return null;
                       },
-                      label: 'Time'.tr(), 
+                      label: 'Time'.tr(),
                       prefixIcon: Icons.watch,
-                      hintText: 'Add your time'.tr(), 
+                      hintText: 'Add your time'.tr(),
                       onTap: () {
                         showTimePicker(
                           context: context,
@@ -251,13 +104,13 @@ class _AddScreenState extends State<AddScreen> {
                       keyboardType: TextInputType.datetime,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your date".tr(); 
+                          return "Please add your date".tr();
                         }
                         return null;
                       },
-                      label: 'Date'.tr(), 
+                      label: 'Date'.tr(),
                       prefixIcon: Icons.calendar_month,
-                      hintText: 'Add your date'.tr(), 
+                      hintText: 'Add your date'.tr(),
                       onTap: () {
                         showDatePicker(
                           context: context,
@@ -278,13 +131,13 @@ class _AddScreenState extends State<AddScreen> {
                       keyboardType: TextInputType.text,
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return "Please add your description".tr(); 
+                          return "Please add your description".tr();
                         }
                         return null;
                       },
-                      label: 'Description'.tr(), 
+                      label: 'Description'.tr(),
                       prefixIcon: Icons.description,
-                      hintText: 'Add your description'.tr(), 
+                      hintText: 'Add your description'.tr(),
                       lines: 5,
                     ),
                     const SizedBox(height: 10),
@@ -298,13 +151,13 @@ class _AddScreenState extends State<AddScreen> {
                             time: timeController.text,
                             description: descController.text,
                           );
-                          print("Task is created".tr()); 
+                          print("Task is created".tr());
                         }
                       },
                       color: Theme.of(context).colorScheme.primary,
                       textColor: Theme.of(context).colorScheme.onPrimary,
                       child: Text(
-                        "Add Task".tr(), 
+                        "Add Task".tr(),
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
